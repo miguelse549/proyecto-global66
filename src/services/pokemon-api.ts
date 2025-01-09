@@ -17,7 +17,10 @@ export const getListPokemon = async (): Promise<PokemonList[]> => {
   const { results } = await httpClientPlugin.get<PokemonApiResponse>(
     POKEMON_API_BASE_URL
   );
-  return results;
+  return results.map((pokemon) => ({
+    ...pokemon,
+    isFavorite: false,
+  }));
 };
 
 export const getDetailsPokemon = async (

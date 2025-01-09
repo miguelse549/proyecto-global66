@@ -1,5 +1,6 @@
 interface PokemonList {
   name: string;
+  isFavorite: boolean;
 }
 
 interface PokemonDetail {

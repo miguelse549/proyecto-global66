@@ -15,7 +15,6 @@ export const useListFavoriteStore = defineStore("listFavorite", {
       if (!this.isFavorite(pokemon.name)) {
         this.favorites.push(pokemon);
       }
-      console.log(this.favorites);
     },
     removeFavorite(name: string) {
       this.favorites = this.favorites.filter(
