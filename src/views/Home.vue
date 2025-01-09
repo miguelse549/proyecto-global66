@@ -33,6 +33,9 @@ const goToListPokemon = () => {
 </template>
 
 <style lang="scss" scoped>
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
 .home {
     display: flex;
     flex-direction: column;
@@ -53,6 +56,7 @@ const goToListPokemon = () => {
     }
 
     .home-content-button {
+        @include center-elements;
         margin-top: 50px;
     }
 

@@ -15,6 +15,7 @@ export const usePokemonFilter = () => {
         .map((typeInfo: any) => typeInfo.type.name)
         .join(", "),
       isFavorite: false,
+      image: pokemon.sprites.other.dream_world.front_default,
     };
   };
 

@@ -8,6 +8,7 @@ interface PokemonDetail {
   weight: number;
   height: number;
   types: { type: { name: string } }[];
+  sprites: any;
 }
 
 interface PokemonDetailFiltered {
@@ -16,6 +17,7 @@ interface PokemonDetailFiltered {
   height: number;
   types: string;
   isFavorite: boolean;
+  image: string;
 }
 
 interface PokemonApiResponse {
