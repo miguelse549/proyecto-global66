@@ -14,7 +14,7 @@ Esta prueba fue desarrollada utilizando Vue 3, Vue Router, Pinia, SASS, Axios y 
 
 - [Repositorio](https://github.com/miguelse549/proyecto-global66)
 
-- [Despliegue Proyecto](https://66e8495562ed9218faebb377--unrivaled-fudge-b42530.netlify.app/)
+- [Despliegue Proyecto](https://api-project-pokemon.netlify.app/)
 
 ## Instalación
 
