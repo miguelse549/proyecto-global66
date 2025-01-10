@@ -1,39 +1,13 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 import Button from './Button.vue';
+import type { PokemonDetailFiltered } from '../../services/interfaces';
+import { useListFavoriteStore } from "../../stores/favorites-store";
+const store = useListFavoriteStore();
 
-const props = defineProps({
-    name: {
-        type: String,
-        required: false,
-        default: ''
-    },
-    image: {
-        type: String,
-        required: false,
-        default: ''
-    },
-    weight: {
-        type: Number,
-        required: false,
-        default: ''
-    },
-    height: {
-        type: Number,
-        required: false,
-        default: ''
-    },
-    types: {
-        type: String,
-        required: false,
-        default: ''
-    },
-    isFavorite: {
-        type: Boolean,
-        required: false,
-        default: false
-    }
-});
+const props = defineProps<{
+    pokemon?: PokemonDetailFiltered | null
+}>();
 
 const emit = defineEmits(['close-modal'])
 
@@ -41,8 +15,15 @@ const closeModal = () => {
     emit('close-modal');
 };
 
+const toggleFavorite = () => {
+    if (props.pokemon) {
+        store.toggleFavorite(props.pokemon);
+        props.pokemon.isFavorite = !props.pokemon.isFavorite;
+    }
+};
+
 const sharePokemon = () => {
-    const pokemonData = `${props.name},${props.weight}, ${props.height}, ${props.types}`;
+    const pokemonData = `${props.pokemon?.name},${props.pokemon?.weight}, ${props.pokemon?.height}, ${props.pokemon?.types}`;
     navigator.clipboard.writeText(pokemonData)
         .then(() => {
             alert('Pokemon data copied!');
@@ -67,26 +48,26 @@ const sharePokemon = () => {
                 </svg>
             </i>
             <div class="card-modal-header">
-                <img style="width: 180px; height: 180px" :src="props.image" alt="image-pokemon" loading="lazy" />
+                <img style="width: 180px; height: 180px" :src="pokemon?.image" alt="image-pokemon" loading="lazy" />
             </div>
             <div class="card-modal-body">
-                <p><span>Name:</span> {{ props.name }}</p>
+                <p><span>Name:</span> {{ pokemon?.name }}</p>
                 <hr>
-                <p><span>Weight:</span> {{ props.weight }}</p>
+                <p><span>Weight:</span> {{ pokemon?.weight }}</p>
                 <hr>
-                <p><span>Height:</span> {{ props.height }}</p>
+                <p><span>Height:</span> {{ pokemon?.height }}</p>
                 <hr>
-                <p><span>Types:</span> {{ props.types }}</p>
+                <p><span>Types:</span> {{ pokemon?.types }}</p>
                 <hr>
             </div>
             <div class="card-modal-actions">
                 <Button @click="sharePokemon">Share to my Frieds</Button>
-                <div class="card-modal-actions-button">
+                <div class="card-modal-actions-button" @click="toggleFavorite">
                     <i class="icon-favorite">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M11.6052 0.904438L8.43178 7.62704L1.33161 8.70855C0.0583408 8.9015 -0.451939 10.5415 0.471424 11.4809L5.60824 16.7107L4.39329 24.0984C4.1746 25.4338 5.52076 26.4341 6.64824 25.8096L13 22.3213L19.3518 25.8096C20.4792 26.429 21.8254 25.4338 21.6067 24.0984L20.3918 16.7107L25.5286 11.4809C26.4519 10.5415 25.9417 8.9015 24.6684 8.70855L17.5682 7.62704L14.3948 0.904438C13.8262 -0.293851 12.1787 -0.309084 11.6052 0.904438Z"
-                                :fill="props.isFavorite ? '#ECA539' : '#BFBFBF'" />
+                                :fill="pokemon?.isFavorite ? '#ECA539' : '#BFBFBF'" />
                         </svg>
                     </i>
                 </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRouter } from "vue-router";
 import Button from '../components/ui/Button.vue';
 import CardPokemon from '../components/ui/CardPokemon.vue';
@@ -30,10 +30,25 @@ const filteredPokemons = computed(() => {
     return filtered;
 });
 
+
+watch(
+    () => store.favorites,
+    () => {
+        pokemons.value = pokemons.value.map(pokemon => ({
+            ...pokemon,
+            isFavorite: store.isFavorite(pokemon.name)
+        }));
+    },
+    { deep: true }
+);
 const getPokemons = async () => {
     showLoading.value = true
     try {
-        pokemons.value = await getListPokemon();
+        const data = await getListPokemon();
+        pokemons.value = data.map((pokemon: PokemonList) => ({
+            ...pokemon,
+            isFavorite: store.isFavorite(pokemon.name)
+        }))
         hideLoading(200)
     } catch (err) {
         showLoading.value = false
@@ -104,9 +119,7 @@ onMounted(() => {
 
     <div class="container">
         <Loading v-if="showLoading"></Loading>
-        <Modal v-if="showModal" @close-modal="closeModal" :name="pokemon?.name" :image="pokemon?.image"
-            :weight="pokemon?.weight" :height="pokemon?.height" :types="pokemon?.types"
-            :isFavorite="pokemon?.isFavorite">
+        <Modal v-if="showModal" @close-modal="closeModal" :pokemon="pokemon">
         </Modal>
         <header>
             <div class="header-content">

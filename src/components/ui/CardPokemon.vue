@@ -19,7 +19,6 @@ const handelClick = () => {
     <div class="container-card">
         <h3>{{ pokemonName }}</h3>
         <div class="button-circle" @click.stop="handelClick">
-            {{ isFavorite }}
             <i class="icon">
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
