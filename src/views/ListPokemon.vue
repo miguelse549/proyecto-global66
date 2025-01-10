@@ -176,13 +176,7 @@ onMounted(() => {
 
     display: flex;
     flex-direction: column;
-    height: 100%;
-
-    header,
-    main,
-    footer {
-        @include center-elements;
-    }
+    height: 100vh;
 
     header {
         height: 110px;
@@ -191,11 +185,11 @@ onMounted(() => {
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 10;
-
+        @include center-elements;
 
         .header-content {
             @include center-elements;
+            height: 100%;
         }
     }
 
@@ -204,25 +198,34 @@ onMounted(() => {
     .footer-content {
         width: 570px;
         max-width: 85%;
-    }
 
-    .main-content-empty {
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
     }
 
     main {
-        padding-top: 110px;
-        padding-bottom: 80px;
+        margin-top: 110px;
+        margin-bottom: 85px;
         overflow-y: auto;
-        position: relative;
-        flex-grow: 1;
+        scrollbar-gutter: stable both-edges;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        padding-right: calc(100vw - 100%);
+
+        .main-content {
+            flex-direction: column;
+        }
+
+        .main-content-empty {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
 
     }
+
 
     footer {
         height: 80px;
@@ -232,12 +235,13 @@ onMounted(() => {
         bottom: 0;
         left: 0;
         width: 100%;
-        z-index: 10;
+        @include center-elements;
 
         .footer-content {
-            display: flex;
-            justify-content: center;
+            @include center-elements;
+            height: 100%;
             gap: 20px;
+
         }
     }
 

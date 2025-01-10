@@ -35,20 +35,29 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update-favorite', 'close-modal'])
-
-const toggleFavorite = () => {
-    emit('update-favorite', props.name);
-};
+const emit = defineEmits(['close-modal'])
 
 const closeModal = () => {
     emit('close-modal');
 };
 
+const sharePokemon = () => {
+    const pokemonData = `${props.name},${props.weight}, ${props.height}, ${props.types}`;
+    navigator.clipboard.writeText(pokemonData)
+        .then(() => {
+            alert('Pokemon data copied!');
+        })
+        .catch((error) => {
+            console.error('Error copying data: ', error);
+        });
+};
+
+
 </script>
 
 <template>
     <div class="modal">
+
         <div class="card-modal">
             <i class="icon" @click="closeModal">
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,8 +80,8 @@ const closeModal = () => {
                 <hr>
             </div>
             <div class="card-modal-actions">
-                <Button>Share to my Frieds</Button>
-                <div class="card-modal-actions-button" @click="toggleFavorite">
+                <Button @click="sharePokemon">Share to my Frieds</Button>
+                <div class="card-modal-actions-button">
                     <i class="icon-favorite">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -156,8 +165,12 @@ const closeModal = () => {
 
     }
 
-    span {
-        font-weight: bold;
+    p {
+        text-transform: capitalize;
+
+        span {
+            font-weight: bold;
+        }
     }
 
     hr {
